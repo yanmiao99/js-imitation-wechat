@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 公共样式 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: space-evenly;
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+    <!-- 对话框样式 -->
+    <style>
+        .box {
+            width: 375px;
+            height: 667px;
+            background: #F3F3F3;
+            position: relative;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* 公共样式 */
+        .left-text-input, .right-text-input {
+            width: fit-content;
+            max-width: 250px;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            color: #333;
+            background: #fff;
+            margin-bottom: 10px;
+            position: relative;
+            outline: none;
+        }
+
+        .left-text-input img,
+        .right-text-input img {
+            width: 20px;
+            vertical-align: top;
+        }
+
+        .left-text-input {
+            margin-right: auto;
+            background: #ffffff;
+        }
+
+        .right-text-input {
+            margin-left: auto;
+            background: #A9EA7A;
+        }
+        .left-text-input::before,
+        .right-text-input::before{
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+        }
+
+        .left-text-input::before {
+            left: -10px;
+            border-right-color: #fff;
+        }
+
+        .right-text-input::before {
+            right: -10px;
+            border-left-color: #A9EA7A;
+        }
+
+
+        .dialog-item {
+            display: flex;
+        }
+
+        .left-head-img, .right-head-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: red;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .left-head-img {
+            margin-right: 10px;
+        }
+
+        .right-head-img {
+            margin-left: 10px;
+        }
+
+        /* 公共样式 */
+        .left-custom-emoji,
+        .right-custom-emoji {
+            max-width: 125px !important;
+            max-height: 100px !important;
+            margin-top: 10px;
+        }
+
+        .left-custom-emoji {
+            margin-right: auto;
+        }
+
+        .right-custom-emoji {
+            margin-left: auto;
+        }
+
+    </style>
+    <!-- 测试面板样式 -->
+    <style>
+        .function-box {
+            width: 600px;
+            height: 667px;
+            background: #F3F3F3;
+            position: relative;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .function-item {
+            margin: 20px 0;
+            user-select: none;
+        }
+
+        .function-item > label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .emoji-box {
+            user-select: none;
+        }
+
+        label {
+            user-select: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- 微信盒子 -->
+    <div class="box">
+        <!-- 测试代码 -->
+        <!--<div class="dialog-item">-->
+        <!--    <div class="left-head-img"></div>-->
+        <!--    <div class="left-text-input" contenteditable>点击可以编辑</div>-->
+        <!--</div>-->
+        <!--<div class="dialog-item">-->
+        <!--    <div class="right-text-input" contenteditable>点击可以编辑</div>-->
+        <!--    <div class="right-head-img"></div>-->
+        <!--</div>-->
+    </div>
+
+    <!-- 侧边 功能区 -->
+    <div class="function-box">
+
+        <!-- 对话框 -->
+        <div class="function-item">
+            <button class="add-he-dialog">添加他人对话框</button>
+            <button class="add-self-dialog">添加自己对话框</button>
+        </div>
+
+        <hr>
+
+        <!-- 自定义表情对话框 -->
+        <div class="function-item">
+            <label>
+                添加他人自定义表情对话框
+                <input type="file" class="add-he-expression-dialog" accept="image/*">
+            </label>
+            <label>
+                添加自己自定义表情对话框
+                <input type="file" class="add-self-expression-dialog" accept="image/*">
+            </label>
+        </div>
+
+        <hr>
+
+        <!-- 头像的更换 -->
+        <div class="function-item">
+            <label>
+                添加或修改他人的头像 ( 不要上传透明背景的 )
+                <input type="file" class="add-he-head-img" accept="image/*">
+            </label>
+            <label>
+                添加或修改自己的头像 ( 不要上传透明背景的 )
+                <input type="file" class="add-self-head-img" accept="image/*">
+            </label>
+        </div>
+
+        <hr>
+
+        <!-- 在光标处插入表情 -->
+        <div class="function-item">
+            <p>点击表情即可在光标处插入表情</p>
+            <div class="emoji-box"></div>
+        </div>
+
+        <hr>
+
+        <!-- 保存图片 -->
+        <div class="function-item">
+            <button class="save-img"> 保存图片</button>
+        </div>
+
+        <hr>
+
+        <!-- 插入重点文字 -->
+        <div class="function-item">
+            <label>
+                文字 :<input type="text" placeholder="文字" class="key-words">
+            </label>
+            <label>
+                颜色 :<input type="color" class="key-color" value="#5B6B92">
+            </label>
+            <div>
+                <label>
+                    带下划线
+                    <input type="radio" name="drone" class="key-checkbox" value="underline">
+                </label>
+                <label>
+                    不带下划线
+                    <input type="radio" name="drone" class="key-checkbox" value="none" checked>
+                </label>
+            </div>
+            <button class="key-button">在光标处插入文字</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- 引入 emoji -->
+<script src="emoji.js"></script>
+<!-- 引入 html2canvas -->
+<script src="html2canvas.js"></script>
+
+<script>
+    // 全局变量
+    // 左边头像
+    let leftHead = null
+    // 右边头像
+    let rightHead = null
+
+    // -------------  添加对话框
+
+    // 获取添加他人对话框
+    let addHeDialog = document.querySelector('.add-he-dialog')
+    // 获取添加自己对话框
+    let addSelfDialog = document.querySelector('.add-self-dialog')
+    // 获取组件盒子
+    let box = document.querySelector('.box')
+    // 添加他人对话框
+    addHeDialog.addEventListener('click', () => {
+        // 1. 创建一条数据
+        let itemDiv = document.createElement('div')
+        itemDiv.className = 'dialog-item'
+        // 2. 创建头像
+        let headDiv = document.createElement('div')
+        headDiv.className = 'left-head-img'
+        // 2.1 判断是否已经上传头像
+        if (leftHead !== null) {
+            headDiv.style.backgroundImage = `url(${leftHead})`
+        }
+        // 3. 创建对话框div
+        let dialogDiv = document.createElement('div')
+        dialogDiv.className = 'left-text-input'
+        dialogDiv.innerText = '点击编辑'
+        dialogDiv.setAttribute('contenteditable', true)
+        // 4. 把头像和对话框添加到单条数据中
+        itemDiv.appendChild(headDiv)
+        itemDiv.appendChild(dialogDiv)
+        // 5. 把单条数据添加到盒子中
+        box.appendChild(itemDiv)
+    })
+    // 添加自己对话框
+    addSelfDialog.addEventListener('click', () => {
+        // 1. 创建一条数据
+        let itemDiv = document.createElement('div')
+        itemDiv.className = 'dialog-item'
+        // 2. 创建头像
+        let headDiv = document.createElement('div')
+        headDiv.className = 'right-head-img'
+        // 2.1 判断是否已经上传头像
+        if (rightHead !== null) {
+            headDiv.style.backgroundImage = `url(${rightHead})`
+        }
+        // 3. 创建对话框div
+        let dialogDiv = document.createElement('div')
+        dialogDiv.className = 'right-text-input'
+        dialogDiv.innerText = '点击编辑'
+        dialogDiv.setAttribute('contenteditable', true)
+        // 4. 把头像和对话框添加到单条数据中 ( 这个要和他人的顺序相反 )
+        itemDiv.appendChild(dialogDiv)
+        itemDiv.appendChild(headDiv)
+        // 5. 把单条数据添加到盒子中
+        box.appendChild(itemDiv)
+    })
+
+    // -------------  添加头像
+
+    // 获取添加他人头像
+    let addHeHeadImg = document.querySelector('.add-he-head-img')
+    // 获取添加自己头像
+    let addSelfHeadImg = document.querySelector('.add-self-head-img')
+    // 添加他人头像
+    addHeHeadImg.addEventListener('change', function () {
+        let blob = this.files[0]
+        //创建文件读取对象
+        let reader = new FileReader();
+        reader.readAsDataURL(blob);
+        //监听文件读取结束后事件
+        reader.onloadend = function (e) {
+            let headImg = document.querySelectorAll('.left-head-img')
+            headImg.forEach(item => {
+                item.style.backgroundImage = `url(${e.target.result})`
+            })
+            // 暴露变量给全局
+            leftHead = e.target.result
+        };
+    })
+    //添加自己头像
+    addSelfHeadImg.addEventListener('change', function () {
+        let blob = this.files[0]
+        //创建文件读取对象
+        let reader = new FileReader();
+        reader.readAsDataURL(blob);
+        //监听文件读取结束后事件
+        reader.onloadend = function (e) {
+            let headImg = document.querySelectorAll('.right-head-img')
+            headImg.forEach(item => {
+                item.style.backgroundImage = `url(${e.target.result})`
+            })
+            // 暴露变量给全局
+            rightHead = e.target.result
+        };
+    })
+
+
+    // -------------  自定义表情对话框
+    // 获取添加他人表情的上传框
+    let addHeExpressionDialog = document.querySelector('.add-he-expression-dialog')
+    // 获取添加自己表情的上传框
+    let addSelfExpressionDialog = document.querySelector('.add-self-expression-dialog')
+    // 添加他人表情
+    addHeExpressionDialog.addEventListener('change', function () {
+        let blob = this.files[0]
+        //创建文件读取对象
+        let reader = new FileReader();
+        reader.readAsDataURL(blob);
+        //监听文件读取结束后事件
+        reader.onloadend = function (e) {
+            // 1. 创建一条数据
+            let itemDiv = document.createElement('div')
+            itemDiv.className = 'dialog-item'
+            // 2. 创建头像
+            let headDiv = document.createElement('div')
+            headDiv.className = 'left-head-img'
+            // 2.1 判断是否已经上传头像
+            if (leftHead !== null) {
+                headDiv.style.backgroundImage = `url(${leftHead})`
+            }
+            // 3. 创建存放自定义表情的 img
+            let dialogImg = document.createElement('img')
+            dialogImg.src = e.target.result
+            dialogImg.className = 'left-custom-emoji'
+            // 5. 把头像和对话框添加到单条数据中
+            itemDiv.appendChild(headDiv)
+            itemDiv.appendChild(dialogImg)
+            // 6. 把单条数据添加到盒子中
+            box.appendChild(itemDiv)
+            // 7. 清空添加表情的 input 框中的文件
+            addSelfExpressionDialog.value = ''
+        };
+    })
+    // 添加自己表情
+    addSelfExpressionDialog.addEventListener('change', function () {
+        let blob = this.files[0]
+        //创建文件读取对象
+        let reader = new FileReader();
+        reader.readAsDataURL(blob);
+        //监听文件读取结束后事件
+        reader.onloadend = function (e) {
+            // 1. 创建一条数据
+            let itemDiv = document.createElement('div')
+            itemDiv.className = 'dialog-item'
+            // 2. 创建头像
+            let headDiv = document.createElement('div')
+            headDiv.className = 'right-head-img'
+            // 2.1 判断是否已经上传头像
+            if (leftHead !== null) {
+                headDiv.style.backgroundImage = `url(${leftHead})`
+            }
+            // 3. 创建存放自定义表情的 img
+            let dialogImg = document.createElement('img')
+            dialogImg.src = e.target.result
+            dialogImg.className = 'right-custom-emoji'
+            // 5. 把头像和对话框添加到单条数据中
+            itemDiv.appendChild(dialogImg)
+            itemDiv.appendChild(headDiv)
+            // 6. 把单条数据添加到盒子中
+            box.appendChild(itemDiv)
+            // 7. 清空添加表情的 input 框中的文件
+            addSelfExpressionDialog.value = ''
+        };
+    })
+
+    // -------------  添加文字表情
+
+    // 获取存放 emoji 的容器
+    let emojiBox = document.querySelector('.emoji-box')
+    // 循环表情并且渲染到界面上
+    emoji.forEach(item => {
+        let oImg = document.createElement('img')
+        oImg.src = item.src
+        oImg.alt = item.alt
+        oImg.style.width = "20px"
+        oImg.style.height = "20px"
+        oImg.style.margin = '5px'
+        oImg.style.userSelect = 'none'
+        emojiBox.appendChild(oImg)
+        // 添加插入表情的点击事件
+        oImg.addEventListener('click', function () {
+            insertImg(item.src)
+        })
+    })
+
+
+    /**
+     * 在光标处插入图片
+     * @param src 路径
+     */
+    function insertImg(src) {
+        if (window.getSelection) {
+            let sel = window.getSelection();
+            let range = sel.getRangeAt(0);
+            let img = new Image();
+            range.deleteContents()
+            img.src = src;
+            range.insertNode(img);
+            range.collapse(false); //对于IE来说，参数不可省略
+        }
+    }
+
+    // -------------  保存图片
+
+    // 获取保存按钮
+    let saveImg = document.querySelector('.save-img')
+
+    // 点击保存按钮
+    saveImg.addEventListener('click', () => {
+        saveImgFn('微信图片')
+    })
+
+    // // 自动保存图片 10 秒一次
+    // setInterval(() => {
+    //     saveImgFn('自动保存')
+    // }, 10000)
+
+    // 保存图片的方法
+    function saveImgFn(name) {
+        // 获取需要转换的dom
+        html2canvas(document.querySelector('.box'))
+            .then(canvas => {
+                let imgUrl = canvas.toDataURL('image/jpg')
+                let image = document.createElement('img')
+                image.src = imgUrl
+                let a = document.createElement('a')
+                a.href = imgUrl
+                a.download = name // 自定义名称
+                a.click()
+            })
+    }
+
+    // -------------  在所选位置插入重点文字
+
+
+    // 获取 按钮
+    let keyBtn = document.querySelector('.key-button')
+
+    // 点击插入重点文字
+    keyBtn.addEventListener('click', () => {
+        // 获取 文字
+        let keyWords = document.querySelector('.key-words')
+        // 获取 颜色
+        let keyColor = document.querySelector('.key-color')
+        // 获取 下划线
+        let keyCheckbox = document.querySelector('.key-checkbox:checked')
+
+        // 插入文字
+        insertSpan({
+            text: keyWords.value,
+            color: keyColor.value,
+            underline: keyCheckbox.value
+        })
+    })
+
+    /**
+     * 在光标处插入元素
+     * @param text 文字内容
+     * @param color 文字颜色
+     * @param underline 是否带有下划线
+     */
+    function insertSpan({text, color, underline}) {
+        if (window.getSelection) {
+            let sel = window.getSelection();
+            let range = sel.getRangeAt(0);
+            // 创建元素
+            let oSpan = document.createElement('span')
+            range.deleteContents()
+            oSpan.innerText = text
+            oSpan.style.color = color
+            oSpan.style.textDecoration = underline
+            // 整块选中/删除
+            oSpan.setAttribute('contenteditable', false)
+            range.insertNode(oSpan);
+            range.collapse(false); //对于IE来说，参数不可省略
+        }
+    }
+
+</script>
+
+</body>
+</html>
