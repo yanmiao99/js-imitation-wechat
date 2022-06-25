@@ -24,11 +24,16 @@
             height: 667px;
             background: #F3F3F3;
             position: relative;
-            padding: 10px;
+            overflow: hidden;
+        }
+
+        .box-in {
+            height: 611px;
+            padding: 10px 10px 10px 10px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
+            overflow-y: scroll;
         }
 
         /* 公共样式 */
@@ -60,8 +65,9 @@
             margin-left: auto;
             background: #A9EA7A;
         }
+
         .left-text-input::before,
-        .right-text-input::before{
+        .right-text-input::before {
             content: '';
             position: absolute;
             top: 10px;
@@ -118,6 +124,16 @@
             margin-left: auto;
         }
 
+        .box-footer {
+            width: 375px;
+            height: 56px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: url("./images/footer-text-light.png") no-repeat;
+            background-size: 375px 56px;
+        }
+
     </style>
     <!-- 测试面板样式 -->
     <style>
@@ -155,15 +171,8 @@
 <div class="wrapper">
     <!-- 微信盒子 -->
     <div class="box">
-        <!-- 测试代码 -->
-        <!--<div class="dialog-item">-->
-        <!--    <div class="left-head-img"></div>-->
-        <!--    <div class="left-text-input" contenteditable>点击可以编辑</div>-->
-        <!--</div>-->
-        <!--<div class="dialog-item">-->
-        <!--    <div class="right-text-input" contenteditable>点击可以编辑</div>-->
-        <!--    <div class="right-head-img"></div>-->
-        <!--</div>-->
+        <div class="box-in"></div>
+        <div class="box-footer"></div>
     </div>
 
     <!-- 侧边 功能区 -->
@@ -173,6 +182,14 @@
         <div class="function-item">
             <button class="add-he-dialog">添加他人对话框</button>
             <button class="add-self-dialog">添加自己对话框</button>
+        </div>
+
+        <hr>
+
+        <!-- 红包对话框 -->
+        <div class="function-item">
+            <button class="add-he-red-pack-dialog">添加他人红包对话框</button>
+            <button class="add-self-red-pack-dialog">添加自己红包对话框</button>
         </div>
 
         <hr>
@@ -263,7 +280,7 @@
     // 获取添加自己对话框
     let addSelfDialog = document.querySelector('.add-self-dialog')
     // 获取组件盒子
-    let box = document.querySelector('.box')
+    let boxIn = document.querySelector('.box-in')
     // 添加他人对话框
     addHeDialog.addEventListener('click', () => {
         // 1. 创建一条数据
@@ -285,7 +302,7 @@
         itemDiv.appendChild(headDiv)
         itemDiv.appendChild(dialogDiv)
         // 5. 把单条数据添加到盒子中
-        box.appendChild(itemDiv)
+        boxIn.appendChild(itemDiv)
     })
     // 添加自己对话框
     addSelfDialog.addEventListener('click', () => {
@@ -308,7 +325,7 @@
         itemDiv.appendChild(dialogDiv)
         itemDiv.appendChild(headDiv)
         // 5. 把单条数据添加到盒子中
-        box.appendChild(itemDiv)
+        boxIn.appendChild(itemDiv)
     })
 
     // -------------  添加头像
@@ -382,7 +399,7 @@
             itemDiv.appendChild(headDiv)
             itemDiv.appendChild(dialogImg)
             // 6. 把单条数据添加到盒子中
-            box.appendChild(itemDiv)
+            boxIn.appendChild(itemDiv)
             // 7. 清空添加表情的 input 框中的文件
             addSelfExpressionDialog.value = ''
         };
@@ -413,7 +430,7 @@
             itemDiv.appendChild(dialogImg)
             itemDiv.appendChild(headDiv)
             // 6. 把单条数据添加到盒子中
-            box.appendChild(itemDiv)
+            boxIn.appendChild(itemDiv)
             // 7. 清空添加表情的 input 框中的文件
             addSelfExpressionDialog.value = ''
         };
@@ -474,7 +491,7 @@
     // 保存图片的方法
     function saveImgFn(name) {
         // 获取需要转换的dom
-        html2canvas(document.querySelector('.box'))
+        html2canvas(document.querySelector('.box-in'))
             .then(canvas => {
                 let imgUrl = canvas.toDataURL('image/jpg')
                 let image = document.createElement('img')
