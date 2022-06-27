@@ -45,7 +45,6 @@
             border-radius: 4px;
             color: #333;
             background: #fff;
-            margin-bottom: 10px;
             position: relative;
             outline: none;
         }
@@ -89,6 +88,7 @@
 
         .dialog-item {
             display: flex;
+            margin-bottom: 10px;
         }
 
         .left-head-img, .right-head-img {
@@ -134,6 +134,144 @@
             background-size: 375px 56px;
         }
 
+        /* 红包 */
+        .he-red-pack {
+            width: 230px;
+            position: relative;
+            border-radius: 4px;
+            padding: 0 10px 0 10px;
+            box-sizing: border-box;
+        }
+
+        .he-red-pack::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            left: -10px;
+        }
+
+        .red-pack-top {
+            display: flex;
+            align-items: center;
+            padding: 10px 0 10px 0;
+        }
+
+        .red-pack-top img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .red-pack-top p {
+            font-weight: 400;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .red-pack-top span {
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .he-red-pack:not(.income) .red-pack-top span {
+            display: none;
+        }
+
+
+        .red-pack-bottom {
+            border-top: 1px solid rgba(251, 216, 187, 0.1);
+            padding: 3px 0 3px 0;
+            box-sizing: border-box;
+        }
+
+        .red-pack-bottom span {
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        /* 颜色配置 */
+        /* 发送 */
+        .he-red-pack.send {
+            background: #F8913F;
+        }
+
+        .he-red-pack:not(.income)::before {
+            border-right-color: #F8913F;
+        }
+
+        .he-red-pack.send .red-pack-bottom {
+            color: #FBD8BB;
+        }
+
+        /* 收入 */
+        .he-red-pack.income {
+            background: #F6DDBF;
+        }
+
+        .he-red-pack:not(.send)::before {
+            border-right-color: #F6DDBF;
+        }
+
+        .he-red-pack.income .red-pack-bottom {
+            color: #fff;
+        }
+
+        /* 红包 */
+        .self-red-pack {
+            width: 230px;
+            position: relative;
+            border-radius: 4px;
+            padding: 0 10px 0 10px;
+            box-sizing: border-box;
+            margin-left: auto;
+        }
+
+        .self-red-pack::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            right: -10px;
+        }
+        /* 颜色配置 */
+        /* 发送 */
+        .self-red-pack.send {
+            background: #F8913F;
+        }
+
+        .self-red-pack:not(.income)::before {
+            border-left-color: #F8913F;
+        }
+
+        .self-red-pack.send .red-pack-bottom {
+            color: #FBD8BB;
+        }
+
+        /* 收入 */
+        .self-red-pack.income {
+            background: #F6DDBF;
+        }
+
+        .self-red-pack:not(.send)::before {
+            border-left-color: #F6DDBF;
+        }
+
+        .self-red-pack.income .red-pack-bottom {
+            color: #fff;
+        }
+
+        .self-red-pack:not(.income) .red-pack-top span {
+            display: none;
+        }
+
+
     </style>
     <!-- 测试面板样式 -->
     <style>
@@ -171,7 +309,72 @@
 <div class="wrapper">
     <!-- 微信盒子 -->
     <div class="box">
-        <div class="box-in"></div>
+        <div class="box-in">
+            <div class="dialog-item">
+                <div class="left-head-img"></div>
+                <div class="he-red-pack send">
+                    <div class="red-pack-top">
+                        <img src="./images/pocket-light-pending.png" alt="">
+                        <div>
+                            <p contenteditable="true">恭喜发财,大吉大利</p>
+                            <span>已领取</span>
+                        </div>
+                    </div>
+                    <div class="red-pack-bottom">
+                        <span>微信红包</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-item">
+                <div class="left-head-img"></div>
+                <div class="he-red-pack income">
+                    <div class="red-pack-top">
+                        <img src="./images/pocket-light-received.png" alt="">
+                        <div>
+                            <p contenteditable="true">恭喜发财,大吉大利</p>
+                            <span>已领取</span>
+                        </div>
+                    </div>
+                    <div class="red-pack-bottom">
+                        <span>微信红包</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-item">
+                <div class="self-red-pack send">
+                    <div class="red-pack-top">
+                        <img src="./images/pocket-light-pending.png" alt="">
+                        <div>
+                            <p contenteditable="true">恭喜发财,大吉大利</p>
+                            <span>已领取</span>
+                        </div>
+                    </div>
+                    <div class="red-pack-bottom">
+                        <span>微信红包</span>
+                    </div>
+                </div>
+                <div class="right-head-img"></div>
+            </div>
+
+            <div class="dialog-item">
+                <div class="self-red-pack income">
+                    <div class="red-pack-top">
+                        <img src="./images/pocket-light-pending.png" alt="">
+                        <div>
+                            <p contenteditable="true">恭喜发财,大吉大利</p>
+                            <span>已领取</span>
+                        </div>
+                    </div>
+                    <div class="red-pack-bottom">
+                        <span>微信红包</span>
+                    </div>
+                </div>
+                <div class="right-head-img"></div>
+            </div>
+
+        </div>
         <div class="box-footer"></div>
     </div>
 
@@ -188,8 +391,14 @@
 
         <!-- 红包对话框 -->
         <div class="function-item">
-            <button class="add-he-red-pack-dialog">添加他人红包对话框</button>
-            <button class="add-self-red-pack-dialog">添加自己红包对话框</button>
+            <div>
+                <button class="add-he-red-pack-dialog-send">添加他人红包对话框(发)</button>
+                <button class="add-he-red-pack-dialog-income">添加他人红包对话框(收)</button>
+            </div>
+            <div style="margin-top: 10px">
+                <button class="add-self-red-pack-dialog-send">添加自己红包对话框(发)</button>
+                <button class="add-self-red-pack-dialog-income">添加自己红包对话框(收)</button>
+            </div>
         </div>
 
         <hr>
@@ -548,6 +757,15 @@
             range.collapse(false); //对于IE来说，参数不可省略
         }
     }
+
+    // -------------  红包相关功能 🧧
+
+    // 获取红包相关按钮
+    let addHeRedPackDialogSend = document.querySelector('.add-he-red-pack-dialog-send') // 他人 发
+    let addHeRedPackDialogIncome = document.querySelector('.add-he-red-pack-dialog-income') // 他人 收
+    let addSelfRedPackDialogSend = document.querySelector('.add-self-red-pack-dialog-send') // 自己 发
+    let addSelfRedPackDialogIncome = document.querySelector('.add-self-red-pack-dialog-income') // 自己 收
+
 
 </script>
 
